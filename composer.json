@@ -39,5 +39,7 @@
       "url": "https://github.com/Aierui/PHPUtils"
     }
   ],
-  "version": "1.0.0"
+  "support": {
+    "issues": "https://github.com/Aierui/PHPUtils/issues"
+  }
 }
