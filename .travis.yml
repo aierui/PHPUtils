@@ -17,5 +17,4 @@ install:
 
 script:
   - phpunit --bootstrap tests/bootstrap.php tests
-  - composer test
 
