@@ -7,3 +7,6 @@ This component provides useful PHP functions, mini classes and snippets that you
 [![Latest Stable Version](https://poser.pugx.org/Aierui/PHPUtils/v/stable?format=flat)](https://packagist.org/packages/Aierui/PHPUtils) 
 [![License](https://poser.pugx.org/Aierui/PHPUtils/license?format=flat)](https://github.com/Aierui/PHPUtils/blob/master/LICENSE)
 
+
+# Documentation
+

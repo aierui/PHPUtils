@@ -6,17 +6,17 @@ php:
   - 7.2
   - 7.3
 
-matrix:
-  fast_finish: true
-  allow_failures:
-    - php: 7.3
-  include:
-    - php: 7.2
-      env: XDEBUG_OFF="yes"
-script:
-  - if [[ $XDEBUG_OFF = yes ]]; then phpenv config-rm xdebug.ini; fi;
-  - make
-  - make test-all
+branches:
+  - master
 
-after_script:
- - make coveralls
+env:
+  APP_ENV: testing
+
+install:
+  - composer self-update
+  - composer install
+
+script:
+  - phpunit --bootstrap tests/bootstrap.php tests
+  - composer test
+

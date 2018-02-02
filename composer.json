@@ -10,7 +10,9 @@
   "authors": [
     {
       "name": "aierui",
-      "email": "aieruishi@gmail.com"
+      "email": "aieruishi@gmail.com",
+      "homepage": "https://shijinrong.cn",
+      "role": "Developer"
     }
   ],
   "require": {
@@ -18,6 +20,11 @@
   },
   "require-dev": {
     "phpunit/phpunit": "~6.5"
+  },
+  "scripts": {
+    "test": [
+      "phpunit"
+    ]
   },
   "autoload": {
     "psr-4": {
@@ -40,6 +47,7 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/Aierui/PHPUtils/issues"
+    "issues": "https://github.com/Aierui/PHPUtils/issues",
+    "wiki": "https://github.com/Aierui/PHPUtils/#documentation"
   }
 }
