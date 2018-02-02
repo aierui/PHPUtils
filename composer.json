@@ -32,7 +32,7 @@
       "PHPUtils\\Tests\\": "tests/"
     }
   },
-  "homepage": "https://github.com/Seldaek/monolog",
+  "homepage": "https://github.com/Aierui/PHPUtils",
   "repositories": [
     {
       "type": "git",
