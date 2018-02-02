@@ -1,10 +1,10 @@
 {
-  "name": "Aierui/PHPUtils",
+  "name": "aierui/phputils",
   "description": "This component provides useful PHP functions, mini classes and snippets that you need and can use every day.",
   "keywords": [
-    "PHP",
-    "UTILS",
-    "PHPUTILS"
+    "php",
+    "utils",
+    "phputils"
   ],
   "license": "MIT",
   "authors": [
@@ -32,5 +32,12 @@
       "PHPUtils\\Tests\\": "tests/"
     }
   },
+  "homepage": "https://github.com/Seldaek/monolog",
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/Aierui/PHPUtils"
+    }
+  ],
   "version": "1.0.0"
 }
