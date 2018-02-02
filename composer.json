@@ -1,0 +1,36 @@
+{
+  "name": "Aierui/PHPUtils",
+  "description": "This component provides useful PHP functions, mini classes and snippets that you need and can use every day.",
+  "keywords": [
+    "PHP",
+    "UTILS",
+    "PHPUTILS"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "aierui",
+      "email": "aieruishi@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~6.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "PHPUtils\\": "src/"
+    },
+    "files": [
+      "src/Helpers.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "PHPUtils\\Tests\\": "tests/"
+    }
+  },
+  "version": "1.0.0"
+}

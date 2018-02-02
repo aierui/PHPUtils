@@ -1,0 +1,9 @@
+##IDE
+.idea
+
+##OSX
+.DS_Store
+
+## Directory for Utils
+/vendor
+/composer.lock
