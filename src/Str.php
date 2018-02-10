@@ -49,6 +49,23 @@ class Str{
     }
 
 
+    public static function strlen($str, $num = 2)
+    {
+        $count = 0;
+        $len = strlen($str);
+        $num = $num >= 1 ? $num : 0;
+        for ($i = 0; $i < $len; $i++) {
+            if (ord($str[$i]) >= 128) {
+                $i += 2;
+                $count += $num;
+            } else {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
+
     /**
      * Limit the number of characters in a string.
      *
@@ -226,6 +243,45 @@ class Str{
     public static function ucfirst($string)
     {
         return static::upper(static::substr($string, 0, 1)).static::substr($string, 1);
+    }
+
+    /**
+     * 切割字符串为数组
+     * @param $string 要处理的字符串
+     * @param string $delimiter 分隔符
+     * @param bool $trim 是否过滤左右空格
+     * @param bool $skipEmpty 是否过滤空值
+     * @return array
+     */
+    public static function explode($string, $delimiter = ',', $trim = true, $skipEmpty = false)
+    {
+        $result = explode($delimiter, $string);
+        if ($trim) {
+            if ($trim === true) {
+                $trim = 'trim';
+            } elseif (!is_callable($trim)) {
+                $trim = function ($v) use ($trim) {
+                    return trim($v, $trim);
+                };
+            }
+            $result = array_map($trim, $result);
+        }
+        if ($skipEmpty) {
+            $result = array_values(array_filter($result));
+        }
+        return $result;
+    }
+
+    /**
+     * 替换字符串中间位置字符为星号
+     * @param  [type] $str [description]
+     * @return [type] [description]
+     */
+    public static function replaceToStar($str)
+    {
+        $len = strlen($str) / 2;
+
+        return substr_replace($str, str_repeat('*', $len), floor(($len) / 2), $len);
     }
 
 
