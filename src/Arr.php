@@ -70,6 +70,17 @@ class Arr
         return count($array);
     }
 
+    public static function unique($array, $keepKeys = false): array
+    {
+        if ($keepKeys) {
+            $array = array_unique($array);
+        } else {
+            $array = array_keys(array_flip($array));
+        }
+
+        return $array;
+    }
+
     /**
      * Determines if an array is associative.
      *
