@@ -37,4 +37,19 @@ class StrTest extends TestCase {
         $this->assertSame('FooBar', Str::studly('_foo_bar_'));
         $this->assertSame('FooBar', Str::studly('_foo_bar_'));
     }
+
+    public function testReplaceToStar()
+    {
+        $this->assertSame('F***ar', Str::replaceToStar('FooBar'));
+        //var_dump(Str::replaceToStar('中华说你民'));
+        //$this->assertSame('中***民', Str::replaceToStar('中华说你民'));
+    }
+
+    public function testIndexOf()
+    {
+        $this->assertSame(3, Str::indexOf('FooBar', 'B'));
+        $this->assertSame(0, Str::indexOf('FooBar', 'F'));
+        $this->assertSame(-1, Str::indexOf('FooBar', 'b', false));
+        $this->assertSame(-1, Str::indexOf('FooBar', 'f', false));
+    }
 }

@@ -8,7 +8,8 @@
 
 namespace PHPUtils;
 
-class Str{
+class Str
+{
 
     /**
      * The cache of snake-cased words.
@@ -35,8 +36,8 @@ class Str{
     /**
      * Return the length of the given string.
      *
-     * @param  string  $value
-     * @param  string  $encoding
+     * @param  string $value
+     * @param  string $encoding
      * @return int
      */
     public static function length($value, $encoding = null)
@@ -69,9 +70,9 @@ class Str{
     /**
      * Limit the number of characters in a string.
      *
-     * @param  string  $value
-     * @param  int     $limit
-     * @param  string  $end
+     * @param  string $value
+     * @param  int $limit
+     * @param  string $end
      * @return string
      */
     public static function limit($value, $limit = 100, $end = '...')
@@ -80,39 +81,39 @@ class Str{
             return $value;
         }
 
-        return rtrim(mb_strimwidth($value, 0, $limit, '', 'UTF-8')).$end;
+        return rtrim(mb_strimwidth($value, 0, $limit, '', 'UTF-8')) . $end;
     }
 
     /**
      * Limit the number of words in a string.
      *
-     * @param  string  $value
-     * @param  int     $words
-     * @param  string  $end
+     * @param  string $value
+     * @param  int $words
+     * @param  string $end
      * @return string
      */
     public static function words($value, $words = 100, $end = '...')
     {
-        preg_match('/^\s*+(?:\S++\s*+){1,'.$words.'}/u', $value, $matches);
+        preg_match('/^\s*+(?:\S++\s*+){1,' . $words . '}/u', $value, $matches);
 
-        if (! isset($matches[0]) || static::length($value) === static::length($matches[0])) {
+        if (!isset($matches[0]) || static::length($value) === static::length($matches[0])) {
             return $value;
         }
 
-        return rtrim($matches[0]).$end;
+        return rtrim($matches[0]) . $end;
     }
 
 
     /**
      * Determine if a given string contains a given substring.
      *
-     * @param  string  $haystack
-     * @param  string|array  $needles
+     * @param  string $haystack
+     * @param  string|array $needles
      * @return bool
      */
     public static function contains($haystack, $needles)
     {
-        foreach ((array) $needles as $needle) {
+        foreach ((array)$needles as $needle) {
             if ($needle != '' && mb_strpos($haystack, $needle) !== false) {
                 return true;
             }
@@ -124,7 +125,7 @@ class Str{
     /**
      * Convert the given string to lower-case.
      *
-     * @param  string  $value
+     * @param  string $value
      * @return string
      */
     public static function lower($value)
@@ -135,7 +136,7 @@ class Str{
     /**
      * Convert the given string to upper-case.
      *
-     * @param  string  $value
+     * @param  string $value
      * @return string
      */
     public static function upper($value)
@@ -146,7 +147,7 @@ class Str{
     /**
      * Generate a more truly "random" alpha-numeric string.
      *
-     * @param  int  $length
+     * @param  int $length
      * @return string
      */
     public static function random($length = 16)
@@ -171,7 +172,7 @@ class Str{
      *
      * @deprecated since version 5.3. Use the "random" method directly.
      *
-     * @param  int  $length
+     * @param  int $length
      * @return string
      */
     public static function quickRandom($length = 16)
@@ -189,7 +190,7 @@ class Str{
     /**
      * Convert a value to camel case.
      *
-     * @param  string  $value
+     * @param  string $value
      * @return string
      */
     public static function camel($value)
@@ -204,7 +205,7 @@ class Str{
     /**
      * Convert a value to studly caps case.
      *
-     * @param  string  $value
+     * @param  string $value
      * @return string
      */
     public static function studly($value)
@@ -224,9 +225,9 @@ class Str{
     /**
      * Returns the portion of string specified by the start and length parameters.
      *
-     * @param  string  $string
-     * @param  int  $start
-     * @param  int|null  $length
+     * @param  string $string
+     * @param  int $start
+     * @param  int|null $length
      * @return string
      */
     public static function substr($string, $start, $length = null)
@@ -237,12 +238,12 @@ class Str{
     /**
      * Make a string's first character uppercase.
      *
-     * @param  string  $string
+     * @param  string $string
      * @return string
      */
     public static function ucfirst($string)
     {
-        return static::upper(static::substr($string, 0, 1)).static::substr($string, 1);
+        return static::upper(static::substr($string, 0, 1)) . static::substr($string, 1);
     }
 
     /**
@@ -284,6 +285,27 @@ class Str{
         return substr_replace($str, str_repeat('*', $len), floor(($len) / 2), $len);
     }
 
+
+    /**
+     * @param $haystack
+     * @param $needle
+     * @param bool $ignoreCase
+     * @param int $offset
+     * @return int
+     */
+    public static function indexOf($haystack, $needle, $ignoreCase = true, $offset = 0)
+    {
+        if ($ignoreCase) {
+            $pos = stripos($haystack, $needle, $offset);
+        } else {
+            $pos = strpos($haystack, $needle, $offset);
+        }
+
+        if ($pos === false){
+            return -1;
+        }
+        return $pos;
+    }
 
 
 }
