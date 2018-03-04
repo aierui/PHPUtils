@@ -307,5 +307,4 @@ class Str
         return $pos;
     }
 
-
 }
