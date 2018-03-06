@@ -15,4 +15,12 @@ class Crypt{
 
     }
 
+	public static function encrypt(){
+
+	}
+
+	public static function decrypt()
+	{
+	}
+	
 }
