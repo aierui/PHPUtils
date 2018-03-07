@@ -49,24 +49,6 @@ class Str
         return mb_strlen($value);
     }
 
-
-    public static function strlen($str, $num = 2)
-    {
-        $count = 0;
-        $len = strlen($str);
-        $num = $num >= 1 ? $num : 0;
-        for ($i = 0; $i < $len; $i++) {
-            if (ord($str[$i]) >= 128) {
-                $i += 2;
-                $count += $num;
-            } else {
-                $count++;
-            }
-        }
-        return $count;
-    }
-
-
     /**
      * Limit the number of characters in a string.
      *
@@ -185,6 +167,39 @@ class Str
 
         return substr(str_shuffle(str_repeat($pool, $length)), 0, $length);
     }
+
+
+    /**
+     * Version 4 UUIDs are pseudo-random!
+     *
+     * @see http://stackoverflow.com/questions/2040240/php-function-to-generate-v4-uuid
+     *
+     * @return string
+     * @throws \Exception
+     */
+    public static function uuid(): string
+    {
+        return sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            // 32 bits for "time_low"
+            random_int(0, 0xffff),
+            random_int(0, 0xffff),
+            // 16 bits for "time_mid"
+            random_int(0, 0xffff),
+            // 16 bits for "time_hi_and_version",
+            // four most significant bits holds version number 4
+            random_int(0, 0x0fff) | 0x4000,
+            // 16 bits, 8 bits for "clk_seq_hi_res",
+            // 8 bits for "clk_seq_low",
+            // two most significant bits holds zero and one for variant DCE1.1
+            random_int(0, 0x3fff) | 0x8000,
+            // 48 bits for "node"
+            random_int(0, 0xffff),
+            random_int(0, 0xffff),
+            random_int(0, 0xffff)
+        );
+    }
+
 
 
     /**
