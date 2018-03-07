@@ -13,11 +13,6 @@ class Client
 
     public static function getIp()
     {
-
-    }
-
-    public static function getClientIp()
-    {
         $uips = array();
         if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']) && strcasecmp($_SERVER['HTTP_X_FORWARDED_FOR'], 'unknown')) {
             $uips = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
@@ -40,7 +35,9 @@ class Client
             }
         }
         return $uip;
+
     }
+
 
     /**
      * 获取当前域名
