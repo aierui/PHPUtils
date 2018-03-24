@@ -291,7 +291,7 @@ class Str
 
     /**
      * The intermediate position character of the replacement string is the asterisk
-     * @param string $string
+     * @param string $string 
      * @param null $start
      * @param null $end
      * @param int $maxStar
