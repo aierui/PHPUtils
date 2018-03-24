@@ -40,7 +40,7 @@ class Str
      * @param  string $encoding
      * @return int
      */
-    public static function length($value, $encoding = null)
+    public static function length(string $value, $encoding = null): int
     {
         if ($encoding) {
             return mb_strlen($value, $encoding);
@@ -57,7 +57,7 @@ class Str
      * @param  string $end
      * @return string
      */
-    public static function limit($value, $limit = 100, $end = '...')
+    public static function limit(string $value, $limit = 100, $end = '...'): string
     {
         if (mb_strwidth($value, 'UTF-8') <= $limit) {
             return $value;
@@ -74,7 +74,7 @@ class Str
      * @param  string $end
      * @return string
      */
-    public static function words($value, $words = 100, $end = '...')
+    public static function words(string $value, $words = 100, $end = '...'): string
     {
         preg_match('/^\s*+(?:\S++\s*+){1,' . $words . '}/u', $value, $matches);
 
@@ -93,14 +93,13 @@ class Str
      * @param  string|array $needles
      * @return bool
      */
-    public static function contains($haystack, $needles)
+    public static function contains(string $haystack, $needles): bool
     {
         foreach ((array)$needles as $needle) {
             if ($needle != '' && mb_strpos($haystack, $needle) !== false) {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -110,7 +109,7 @@ class Str
      * @param  string $value
      * @return string
      */
-    public static function lower($value)
+    public static function lower(string $value): string
     {
         return mb_strtolower($value, 'UTF-8');
     }
@@ -121,18 +120,18 @@ class Str
      * @param  string $value
      * @return string
      */
-    public static function upper($value)
+    public static function upper(string $value): string
     {
         return mb_strtoupper($value, 'UTF-8');
     }
 
     /**
      * Generate a more truly "random" alpha-numeric string.
-     *
-     * @param  int $length
+     * @param int $length
      * @return string
+     * @throws \Exception
      */
-    public static function random($length = 16)
+    public static function random(int $length = 16): string
     {
         $string = '';
 
@@ -147,6 +146,7 @@ class Str
         return $string;
     }
 
+
     /**
      * Generate a "random" alpha-numeric string.
      *
@@ -154,10 +154,11 @@ class Str
      *
      * @deprecated since version 5.3. Use the "random" method directly.
      *
-     * @param  int $length
-     * @return string
+     * @param int $length
+     * @return bool|string
+     * @throws \Exception
      */
-    public static function quickRandom($length = 16)
+    public static function quickRandom(int $length = 16): string
     {
         if (PHP_MAJOR_VERSION > 5) {
             return static::random($length);
@@ -201,14 +202,13 @@ class Str
     }
 
 
-
     /**
      * Convert a value to camel case.
      *
      * @param  string $value
      * @return string
      */
-    public static function camel($value)
+    public static function camel(string $value): string
     {
         if (isset(static::$camelCache[$value])) {
             return static::$camelCache[$value];
@@ -223,7 +223,7 @@ class Str
      * @param  string $value
      * @return string
      */
-    public static function studly($value)
+    public static function studly(string $value): string
     {
         $key = $value;
 
@@ -245,7 +245,7 @@ class Str
      * @param  int|null $length
      * @return string
      */
-    public static function substr($string, $start, $length = null)
+    public static function substr(string $string, int $start, int $length = null): string
     {
         return mb_substr($string, $start, $length, 'UTF-8');
     }
@@ -256,20 +256,20 @@ class Str
      * @param  string $string
      * @return string
      */
-    public static function ucfirst($string)
+    public static function ucfirst(string $string): string
     {
         return static::upper(static::substr($string, 0, 1)) . static::substr($string, 1);
     }
 
     /**
      * 切割字符串为数组
-     * @param $string 要处理的字符串
+     * @param string $string 要处理的字符串
      * @param string $delimiter 分隔符
      * @param bool $trim 是否过滤左右空格
      * @param bool $skipEmpty 是否过滤空值
      * @return array
      */
-    public static function explode($string, $delimiter = ',', $trim = true, $skipEmpty = false)
+    public static function explode(string $string, $delimiter = ',', $trim = true, $skipEmpty = false): array
     {
         $result = explode($delimiter, $string);
         if ($trim) {
@@ -288,16 +288,33 @@ class Str
         return $result;
     }
 
-    /**
-     * 替换字符串中间位置字符为星号
-     * @param  [type] $str [description]
-     * @return [type] [description]
-     */
-    public static function replaceToStar($str)
-    {
-        $len = strlen($str) / 2;
 
-        return substr_replace($str, str_repeat('*', $len), floor(($len) / 2), $len);
+    /**
+     * The intermediate position character of the replacement string is the asterisk
+     * @param string $string
+     * @param null $start
+     * @param null $end
+     * @param int $maxStar
+     * @param string $dot
+     * @param string $charset
+     * @return string
+     */
+    public static function mask(string $string, $start = null, $end = null, $maxStar = 10, $dot = '*', $charset = 'UTF-8'): string
+    {
+        $L = mb_strlen($string, $charset);
+        if (is_null($start) || is_null($end)) {
+            $l = intval($L / 4);// * 前后的长度
+            $start = $end = $l;
+        }
+        $start_string = mb_substr($string, 0, $start, $charset);
+        $end_string = mb_substr($string, $L - $end, $end, $charset);
+
+        $s = $L - $start - $end;
+
+        $maxStar = $s > $maxStar ? $maxStar : $s;
+        $star = str_repeat($dot, $maxStar);
+
+        return $start_string . $star . $end_string;
     }
 
 
@@ -316,10 +333,26 @@ class Str
             $pos = strpos($haystack, $needle, $offset);
         }
 
-        if ($pos === false){
+        if ($pos === false) {
             return -1;
         }
         return $pos;
     }
+
+    /**
+     * 转成16进制
+     * @param string $string
+     * @return string
+     */
+    public static function string2Hex($string)
+    {
+        $hex = '';
+        $len = strlen($string);
+        for ($i = 0; $i < $len; $i++) {
+            $hex .= dechex(ord($string[$i]));
+        }
+        return $hex;
+    }
+
 
 }
