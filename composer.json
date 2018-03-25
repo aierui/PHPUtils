@@ -31,7 +31,7 @@
       "PHPUtils\\": "src/"
     },
     "files": [
-      "src/Helpers.php"
+      "helper.php"
     ]
   },
   "autoload-dev": {
