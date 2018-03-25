@@ -17,6 +17,6 @@ class ArrayTest extends TestCase
     public function testUnique()
     {
         $this->assertSame([1,2,3,4], Arr::unique([1,2,3,4,1,2]));
-        $this->assertSame([1,2,3,4], Arr::unique([1,2,3,4,1,2]));
+        $this->assertSame([1,2,3,4], Arr::unique([1,2,3,4,1,2], true));
     }
 }
