@@ -104,6 +104,28 @@ class Str
     }
 
     /**
+     * @param $haystack
+     * @param $needle
+     * @param bool $ignoreCase
+     * @param int $offset
+     * @return int
+     */
+    public static function indexOf($haystack, $needle, $ignoreCase = true, $offset = 0)
+    {
+        if ($ignoreCase) {
+            $pos = stripos($haystack, $needle, $offset);
+        } else {
+            $pos = strpos($haystack, $needle, $offset);
+        }
+
+        if ($pos === false) {
+            return -1;
+        }
+        return $pos;
+    }
+
+
+    /**
      * Convert the given string to lower-case.
      *
      * @param  string $value
@@ -291,7 +313,7 @@ class Str
 
     /**
      * The intermediate position character of the replacement string is the asterisk
-     * @param string $string 
+     * @param string $string
      * @param null $start
      * @param null $end
      * @param int $maxStar
@@ -317,27 +339,6 @@ class Str
         return $start_string . $star . $end_string;
     }
 
-
-    /**
-     * @param $haystack
-     * @param $needle
-     * @param bool $ignoreCase
-     * @param int $offset
-     * @return int
-     */
-    public static function indexOf($haystack, $needle, $ignoreCase = true, $offset = 0)
-    {
-        if ($ignoreCase) {
-            $pos = stripos($haystack, $needle, $offset);
-        } else {
-            $pos = strpos($haystack, $needle, $offset);
-        }
-
-        if ($pos === false) {
-            return -1;
-        }
-        return $pos;
-    }
 
     /**
      * 转成16进制
