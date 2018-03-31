@@ -43,7 +43,7 @@ class Client
     private static $deviceType = null;
     private static $browserType = null;
 
-    public static function ip()
+    public static function ip(): string
     {
         $uips = array();
         if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']) && strcasecmp($_SERVER['HTTP_X_FORWARDED_FOR'], 'unknown')) {
@@ -72,7 +72,7 @@ class Client
     }
 
 
-    public static function deviceType()
+    public static function deviceType(): string
     {
         if (!empty(self::$deviceType)) return self::$deviceType;
         $uaToPlatform = self::$uabase;
@@ -89,7 +89,7 @@ class Client
     }
 
 
-    public static function browserType()
+    public static function browserType(): string
     {
         if (!empty(self::$browserType)) return self::$browserType;
         $uaToBrowser = self::$uabrowser;
@@ -111,14 +111,14 @@ class Client
     }
 
 
-    public static function isiPhone()
+    public static function isiPhone(): bool
     {
         $deviceType = self::deviceType();
 
         return ($deviceType == 'iPhone');
     }
 
-    public static function isiPad()
+    public static function isiPad(): bool
     {
         $deviceType = self::deviceType();
 
@@ -126,69 +126,69 @@ class Client
     }
 
 
-    public static function isAndroid()
+    public static function isAndroid(): bool
     {
         $deviceType = self::deviceType();
 
         return ($deviceType == 'Android');
     }
 
-    public static function isKindle()
+    public static function isKindle(): bool
     {
         $deviceType = self::deviceType();
         return ($deviceType == 'Kindle');
     }
 
 
-    public static function isWeixin()
+    public static function isWeixin(): bool
     {
         $browserType = self::browserType();
         return ($browserType == 'WeiXin');
     }
 
-    public static function isChrome()
+    public static function isChrome(): bool
     {
         $browserType = self::browserType();
         return ($browserType == 'Chrome');
     }
 
-    public static function isOpera()
+    public static function isOpera(): bool
     {
         $browserType = self::browserType();
         return ($browserType == 'Opera');
     }
 
-    public static function isUC()
+    public static function isUC(): bool
     {
         $browserType = self::browserType();
         return ($browserType == 'UC');
     }
 
-    public static function isFirefox()
+    public static function isFirefox(): bool
     {
         $browserType = self::browserType();
         return ($browserType == 'Firefox');
     }
 
-    public static function isIE()
+    public static function isIE(): bool
     {
         $browserType = self::browserType();
         return ($browserType == 'IE');
     }
 
-    public static function isWP7()
+    public static function isWP7(): bool
     {
         $deviceType = self::deviceType();
         return ($deviceType == 'WP7');
     }
 
-    public static function isWP8()
+    public static function isWP8(): bool
     {
         $deviceType = self::deviceType();
         return ($deviceType == 'WP8');
     }
 
-    public static function isH5UA()
+    public static function isH5UA(): bool
     {
         return (self::isAndroid() || self::isiPhone() || self::isiPad() || self::isWP8());
     }
@@ -196,12 +196,13 @@ class Client
     /**
      * 判断是否爬虫
      */
-    public static function isSpider()
+    public static function isSpider(): bool
     {
         return preg_match('#Googlebot|Baiduspider|Yahoo! Slurp|YodaoBot|msnbot#i', $_SERVER['HTTP_USER_AGENT']);
     }
 
-    public static function isWebBrowser()
+
+    public static function isWebBrowser(): bool
     {
         return preg_match('#Windows 98|Windows NT|Macintosh|Linux.*x11|x11.*Linux#i', $_SERVER ['HTTP_USER_AGENT']);
     }
