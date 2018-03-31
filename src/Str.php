@@ -151,7 +151,7 @@ class Str
      * Generate a more truly "random" alpha-numeric string.
      * @param int $length
      * @return string
-     * @throws \Exception
+     * @throws \Throwable
      */
     public static function random(int $length = 16): string
     {
@@ -178,7 +178,7 @@ class Str
      *
      * @param int $length
      * @return bool|string
-     * @throws \Exception
+     * @throws \Throwable
      */
     public static function quickRandom(int $length = 16): string
     {
@@ -198,7 +198,7 @@ class Str
      * @see http://stackoverflow.com/questions/2040240/php-function-to-generate-v4-uuid
      *
      * @return string
-     * @throws \Exception
+     * @throws \Throwable
      */
     public static function uuid(): string
     {
