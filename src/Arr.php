@@ -141,6 +141,42 @@ class Arr
 
 
     /**
+     * 递归的数组合并实现，用于配置的继承
+     * @param $array array
+     * @param $array1 array
+     * @return array
+     */
+    public static function array_replace_recursive(array $array, array $array1) {
+        if (function_exists('array_replace_recursive')) {
+            return array_replace_recursive($array, $array1);
+        }
+        return self::_array_replace_recursive($array, $array1);
+    }
+
+    /**
+     * 递归的数组合并实现
+     * @param $array array
+     * @param $array1 array
+     * @return array
+     */
+    private static function _array_replace_recursive(array $array, array $array1) {
+        foreach ($array1 as $key => $value){
+            // create new key in $array, if it is empty or not an array
+            if (!isset($array[$key]) || (isset($array[$key]) && !is_array($array[$key]))){
+                $array[$key] = array();
+            }
+
+            // overwrite the value in the base array
+            if (is_array($value)){
+                $value = self::_array_replace_recursive($array[$key], $value);
+            }
+            $array[$key] = $value;
+        }
+        return $array;
+    }
+
+
+    /**
      * 移除数组中空白的元素
      * @param array $array
      * @param bool $trim
