@@ -4,6 +4,9 @@
  * Email: aieruishi@gmail.com
  * Date: 2018/2/16
  * Time: 上午1:31
+ *
+ * 来自ThinkPHP5 Debug 类，便于做性能调试
+ *
  */
 
 namespace PHPUtils;
