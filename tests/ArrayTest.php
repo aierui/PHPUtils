@@ -162,4 +162,238 @@ class ArrayTest extends TestCase
     }
 
 
+    public function testExcept()
+    {
+        $array = [1, 2, 3, 4, 5];
+        Arr::except($array, 4);
+        $this->assertSame([1, 2, 3, 4], $array);
+    }
+
+    public function testCols()
+    {
+        $array = [
+            1 => [
+                'id' => 1,
+                'data' => 'data1'
+            ],
+            2 => [
+                'id' => 2,
+                'data' => 'data2'
+            ],
+            3 => [
+                'id' => 3,
+                'data' => 'data3'
+            ],
+        ];
+
+        $this->assertSame([1, 2, 3], Arr::cols($array, 'id'));
+    }
+
+
+    public function testHashMap()
+    {
+        $array = [
+            1 => [
+                'id' => 1,
+                'data' => 'data1',
+            ],
+            2 => [
+                'id' => 2,
+                'data' => 'data2',
+            ]
+        ];
+
+        $this->assertSame([
+            1 => 'data1',
+            2 => 'data2',
+        ], Arr::hashMap($array, 'id', 'data'));
+    }
+
+    public function testGroupBy()
+    {
+        $array = [
+            1 => [
+                'id' => 1,
+                'data' => 'data1',
+                'type' => 'type1',
+            ],
+            2 => [
+                'id' => 2,
+                'data' => 'data2',
+                'type' => 'type1',
+            ],
+            3 => [
+                'id' => 3,
+                'data' => 'data2',
+                'type' => 'type2',
+            ]
+        ];
+
+        $this->assertSame([
+            'type1' => [
+                0 => [
+                    'id' => 1,
+                    'data' => 'data1',
+                    'type' => 'type1',
+                ],
+                1 => [
+                    'id' => 2,
+                    'data' => 'data2',
+                    'type' => 'type1',
+                ],
+
+            ],
+            'type2' => [
+                0 => [
+                    'id' => 3,
+                    'data' => 'data2',
+                    'type' => 'type2',
+                ],
+            ]
+        ], Arr::groupBy($array, 'type'));
+    }
+
+
+    public function testTree()
+    {
+
+        $array = [
+            0 => [
+                'id' => 1,
+                'data' => 'data1',
+                'parent' => 0,
+            ],
+            1 => [
+                'id' => 2,
+                'data' => 'data2',
+                'parent' => 0,
+            ],
+            2 => [
+                'id' => 3,
+                'data' => 'data3',
+                'parent' => 2,
+            ],
+            3 => [
+                'id' => 4,
+                'data' => 'data4',
+                'parent' => 2,
+            ],
+            4 => [
+                'id' => 5,
+                'data' => 'data5',
+                'parent' => 3,
+            ],
+        ];
+
+        $this->assertSame([
+            0 => [
+                'id' => 1,
+                'data' => 'data1',
+                'parent' => 0,
+                'nodes' => [],
+            ],
+            1 => [
+                'id' => 2,
+                'data' => 'data2',
+                'parent' => 0,
+                'nodes' => [
+                    0 => [
+                        'id' => 3,
+                        'data' => 'data3',
+                        'parent' => 2,
+                        'nodes' => [
+                            0 => [
+                                'id' => 5,
+                                'data' => 'data5',
+                                'parent' => 3,
+                                'nodes' => [],
+                            ]
+                        ],
+                    ],
+                    1 => [
+                        'id' => 4,
+                        'data' => 'data4',
+                        'parent' => 2,
+                        'nodes' => [],
+                    ]
+
+                ],
+
+            ],
+        ], Arr::tree($array, 'id', 'parent', 'nodes'));
+    }
+
+    /*
+    public function testTreeToArray()
+    {
+
+        $array = [
+            0 => [
+                'id' => 1,
+                'data' => 'data1',
+                'parent' => 0,
+            ],
+            1 => [
+                'id' => 2,
+                'data' => 'data2',
+                'parent' => 0,
+            ],
+            2 => [
+                'id' => 3,
+                'data' => 'data3',
+                'parent' => 2,
+            ],
+            3 => [
+                'id' => 4,
+                'data' => 'data4',
+                'parent' => 2,
+            ],
+            4 => [
+                'id' => 5,
+                'data' => 'data5',
+                'parent' => 3,
+            ],
+        ];
+
+        $tree = Arr::tree($array, 'id', 'parent', 'nodes');
+
+        var_dump(Arr::treeToArray($tree, 'nodes'));die;
+
+        $this->assertSame($array, Arr::treeToArray($tree, 'nodes'));
+    }*/
+
+    public function testSortByCol()
+    {
+        $array = [
+            0 => [
+                'create_time' => '2018-03-01 12:21:00',
+            ],
+            1 => [
+                'create_time' => '2018-03-02 12:21:00',
+            ],
+            2 => [
+                'create_time' => '2018-03-03 12:21:00',
+            ],
+            3 => [
+                'create_time' => '2018-03-04 12:21:00',
+            ]
+        ];
+
+        $this->assertSame([
+            0 => [
+                'create_time' => '2018-03-04 12:21:00',
+            ],
+            1 => [
+                'create_time' => '2018-03-03 12:21:00',
+            ],
+            2 => [
+                'create_time' => '2018-03-02 12:21:00',
+            ],
+            3 => [
+                'create_time' => '2018-03-01 12:21:00',
+            ]
+
+        ], Arr::sortByMultiCols($array, 'create_time', SORT_DESC));
+    }
+
 }
