@@ -13,8 +13,10 @@ use ArrayAccess;
 
 class Arr
 {
-    /** 数组排序
-     * @param $arr
+
+    /**
+     * 数组排序
+     * @param array $array
      * @param callable|null $callback
      * @return array
      */
@@ -104,8 +106,7 @@ class Arr
 
     /**
      * 合并多个数组
-     * @param array $a1
-     * @param array $a2
+     * @param array[] ...$arrays
      * @return array
      */
     public static function merge(array ... $arrays): array
@@ -141,12 +142,13 @@ class Arr
 
 
     /**
-     * 递归的数组合并实现，用于配置的继承
+     * 递归的数组合并实现
      * @param $array array
      * @param $array1 array
      * @return array
      */
-    public static function array_replace_recursive(array $array, array $array1) {
+    public static function array_replace_recursive(array $array, array $array1)
+    {
         if (function_exists('array_replace_recursive')) {
             return array_replace_recursive($array, $array1);
         }
@@ -159,15 +161,16 @@ class Arr
      * @param $array1 array
      * @return array
      */
-    private static function _array_replace_recursive(array $array, array $array1) {
-        foreach ($array1 as $key => $value){
+    private static function _array_replace_recursive(array $array, array $array1)
+    {
+        foreach ($array1 as $key => $value) {
             // create new key in $array, if it is empty or not an array
-            if (!isset($array[$key]) || (isset($array[$key]) && !is_array($array[$key]))){
+            if (!isset($array[$key]) || (isset($array[$key]) && !is_array($array[$key]))) {
                 $array[$key] = array();
             }
 
             // overwrite the value in the base array
-            if (is_array($value)){
+            if (is_array($value)) {
                 $value = self::_array_replace_recursive($array[$key], $value);
             }
             $array[$key] = $value;
@@ -180,9 +183,8 @@ class Arr
      * 移除数组中空白的元素
      * @param array $array
      * @param bool $trim
-     * @return array
      */
-    public static function removeEmpty(array & $array, $trim = true): array
+    public static function removeEmpty(array & $array, $trim = true)
     {
         foreach ($array as $key => $value) {
             if (is_array($value)) {
@@ -242,9 +244,8 @@ class Arr
      * 移除数组中某个健
      * @param array $array
      * @param $keys
-     * @return array
      */
-    public static function except(array &$array, $keys): array
+    public static function except(array &$array, $keys)
     {
         $keys = (array)$keys;
 
@@ -383,40 +384,23 @@ class Arr
     }
 
 
-    /**
-     * 根据指定的键对数组排序
-     * @param array $array
-     * @param $keyname
-     * @param int $sort
-     * @return array 排序后的数组
-     */
-    public static function sortByCol(array $array, $keyName, $sort = SORT_ASC): array
+    public static function sortByMultiCols($multi_array, $keyName, $sort = SORT_ASC)
     {
-        return self::sortByMultiCols($array, array($keyName => $sort));
-    }
 
-
-    /**
-     *  将一个二维数组按照多个列进行排序，类似 SQL 语句中的 ORDER BY
-     * @param array $array
-     * @param $args
-     * @return array
-     */
-    public static function sortByMultiCols(array $array, $args): array
-    {
-        $sortArray = [];
-        $sortRule = '';
-        foreach ($args as $sortField => $sortDir) {
-            foreach ($array as $offset => $row) {
-                $sortArray[$sortField][$offset] = $row[$sortField];
+        if (is_array($multi_array)) {
+            foreach ($multi_array as $row_array) {
+                if (is_array($row_array)) {
+                    $key_array[] = $row_array[$keyName];
+                }
             }
-            $sortRule .= '$sortArray[\'' . $sortField . '\'], ' . $sortDir . ', ';
+        } else {
+            return false;
         }
-        if (empty($sortArray) || empty($sortRule)) {
-            return $array;
+        if (empty($key_array)) {
+            return false;
         }
-        eval('array_multisort(' . $sortRule . '$rowset);');
-        return $array;
+        array_multisort($key_array, $sort, $multi_array);
+        return $multi_array;
     }
 
 
