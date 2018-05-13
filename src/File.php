@@ -257,4 +257,22 @@ class File
         closedir($handle);
         return $files;
     }
+
+    public static function getDirFile($path, $fileregular = '')
+    {
+        $path = rtrim($path, "/");
+        if (!is_dir($path)) return array();
+        $list = @scandir($path);
+        if ($list === false) return array();
+        $files = array();
+        foreach ($list as $filename) {
+            $file = $path . '/' . $filename;
+            if (!is_file($file)) continue;
+            if (!empty($fileregular)) {
+                if (!preg_match($fileregular, $filename)) continue;
+            }
+            $files[] = $file;
+        }
+        return $files;
+    }
 }
