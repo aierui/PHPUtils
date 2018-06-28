@@ -200,6 +200,17 @@ class Arr
 
 
     /**
+     * @param $array
+     * @return array
+     * $links http://php.net/manual/zh/function.array-filter.php
+     */
+    public static function removeEmptyV2($array)
+    {
+        return array_filter($array);
+    }
+
+
+    /**
      * 过滤空字符，并重建数字索引
      * @param array $array
      * @param bool $trim
