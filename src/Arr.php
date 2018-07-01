@@ -287,6 +287,26 @@ class Arr
     }
 
     /**
+     * 获取二维数组中指定键的所有值
+     * 这个方法优于上面 cols
+     * @param array $array
+     * @param $column
+     * @return array
+     */
+    public static function column(array $array, $column)
+    {
+        if (function_exists('array_column')) {
+            return array_column($array, $column);
+        } else {
+            array_map(function ($value) use ($column, &$arr) {
+                $arr[] = $value[$column];
+            }, $array);
+            return $arr;
+        }
+    }
+
+
+    /**
      * @param array $array
      * @param $key_field
      * @param null $value_field
