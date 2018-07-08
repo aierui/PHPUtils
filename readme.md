@@ -12,4 +12,3 @@ This component provides useful PHP functions, mini classes and snippets that you
 # Documentation
 
 
-# Test
