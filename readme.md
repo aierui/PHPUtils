@@ -8,7 +8,6 @@ This component provides useful PHP functions, mini classes and snippets that you
 [![License](https://poser.pugx.org/Aierui/PHPUtils/license?format=flat)](https://github.com/aierui/PHPUtils/blob/master/LICENSE)
 
 
-
 # Documentation
 
 
