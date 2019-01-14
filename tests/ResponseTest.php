@@ -8,8 +8,11 @@
 
 namespace Tests;
 
+use PHPUnit\Framework\TestCase;
+use PHPUtils\Response;
 
-class ResponseTest
+class ResponseTest extends TestCase
 {
+
 
 }
