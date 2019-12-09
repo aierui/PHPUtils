@@ -17,7 +17,6 @@ namespace PHPUtils;
  *
  * 当然如果数据足够简单或已经按照一定顺序，效果也就不一样
  */
-
 class Sort
 {
 
@@ -282,5 +281,33 @@ class Sort
         }
 
         return $array;
+    }
+
+
+    public static function eraseOverlapIntervals(array $array): int
+    {
+        $len = count($array);
+        if ($len == 0) return 0;
+
+        // 对区间进行排序，以终止点进行排序, 若终止点相同则，起始点小的靠前  否则终止点小的靠前
+        uasort($array, function ($a, $b) {
+            if ($a['end'] == $b['end']) {
+                return $a['start'] > $b['start'];
+            }
+            return $a['end'] > $b['end'];
+        });
+
+        $res = 1;                               //初始化最终结果
+        $pre = 0;                               //记录前一个区间的下标
+
+        for($i=1;$i<$len;++$i){                 //遍历整个数组
+            //如果当前的区间起始小于前一个区间的结尾 则为 不重叠区间
+            if($array[$i]['start'] >= $array[$pre]['end']){
+                $res++;
+                $pre = $i;
+            }
+        }
+
+        return $len - $res;
     }
 }
