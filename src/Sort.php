@@ -150,12 +150,10 @@ class Sort
         $right = array_slice($array, $mid);
 
         return self::mergeSwap(self::merge($left), self::merge($right));
-
     }
 
     public static function mergeSwap($left, $right)
     {
-
         $result = [];
         $i = 0;
         $j = 0;
@@ -165,7 +163,6 @@ class Sort
         }
 
         return array_merge($result, array_splice($left, $i), array_splice($right, $j));
-
     }
 
     /**
@@ -200,6 +197,7 @@ class Sort
         //递归调用这个函数,并记录结果
         $left = self::quick($left);
         $right = self::quick($right);
+
         return array_merge($left, [$num], $right);
     }
 
